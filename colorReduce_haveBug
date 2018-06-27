@@ -1,0 +1,30 @@
+#include<opencv2/core/core.hpp>
+#include<opencv2/highgui/highgui.hpp>
+#include<opencv2/imgproc/imgproc.hpp>
+//#include "features2d.hpp"
+#include<iostream>
+using namespace std;
+using namespace cv;
+
+void colorReduce(Mat& inputImage, Mat& outputImage, int div) {};
+int main()
+{
+	Mat srcImage = imread("2.jpg");
+	imshow("原始", srcImage);
+
+	Mat dstImage;
+	dstImage.create(srcImage.rows, srcImage.cols, srcImage.type());
+
+	
+	double time0 = static_cast<double>(getTickCount());
+
+	colorReduce(srcImage, dstImage, 32);
+	time0 = ((double)getTickCount() - time0) / getTickFrequency();
+	cout << "此方法运行时间" << time0 << "秒" << endl;
+
+	imshow("效果图", dstImage);
+
+	waitKey();
+	return 0;
+
+}
