@@ -1,0 +1,38 @@
+#include<opencv2/core/core.hpp>
+#include<opencv2/highgui/highgui.hpp>
+#include<opencv2/imgproc/imgproc.hpp>
+//#include "features2d.hpp"
+#include<iostream>
+using namespace std;
+using namespace cv;
+
+void baoGuangFilter(Mat &srcImage);
+
+int main() {
+	Mat srcImage = imread("23.jpg");//图片在工程目录下，否则写绝对路径
+
+	if (!srcImage.data || srcImage.empty()) {
+		cout << "读入图片错误！" << endl;
+		return -1;
+	}
+
+	imshow("原图", srcImage);
+
+	baoGuangFilter(srcImage);
+	waitKey(0);
+	return 0;
+}
+
+void baoGuangFilter(Mat &srcImage) {
+	int rowNum = srcImage.rows;
+	int colNum = srcImage.cols * srcImage.channels();
+
+	for (int j = 0; j < rowNum; j++) {
+		uchar* data = srcImage.ptr<uchar>(j);
+		for (int i = 0; i < colNum; i++) {
+			data[i] = data[i] > 128 ? data[i] : 255 - data[i];
+		}
+	}
+
+	imshow("曝光滤镜", srcImage);
+}
